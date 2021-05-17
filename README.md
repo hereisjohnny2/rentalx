@@ -29,7 +29,7 @@ Atualmente, o projeto está rodando no docker e não possui ainda associação c
 
 ```bash
 # Clonar o repositório
-$ gir clone https://github.com/hereisjohnny2/rentalx.git
+$ git clone https://github.com/hereisjohnny2/rentalx.git
 
 # Criar a imagem
 $ docker build -t rentalx
