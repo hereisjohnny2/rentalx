@@ -6,6 +6,6 @@
   "password": "ignite",
   "database": "rentalx",
   "cli": {
-    "magrationsDir": "./src/database/migrations"
+    "migrationsDir": "./src/database/migrations"
   }
 }
