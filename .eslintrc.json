@@ -58,7 +58,7 @@
         ],
         "import/no-extraneous-dependencies": [
             "error",
-            { "devDependencies": ["**/*.spec.js"] }
+            { "devDependencies": true }
         ],
         "prettier/prettier": "error"
     },
