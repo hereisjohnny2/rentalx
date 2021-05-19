@@ -5,12 +5,9 @@ import {
 } from "../ICategoriesRepository";
 
 class CategoriesRepository implements ICategoriesRepository {
-  private categories: Category[];
-
-  private static INSTANCE: CategoriesRepository;
-
-  private constructor() {
-    this.categories = [];
+  private repository: Repository<Category>;
+  constructor() {
+    this.repository = getRepository(Category);
   }
 
   public static getInstance(): CategoriesRepository {
