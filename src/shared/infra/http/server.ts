@@ -4,12 +4,11 @@ import "express-async-errors";
 import swaggerUi from "swagger-ui-express";
 import "reflect-metadata";
 
-import { AppError } from "./errors/AppError";
+import "../typeorm";
+import "../../container";
+import swaggerFile from "../../../swagger.json";
+import { AppError } from "../../errors/AppError";
 import { router } from "./routes";
-import swaggerFile from "./swagger.json";
-
-import "./database";
-import "./shared/container";
 
 const app = express();
 app.use(cors());
