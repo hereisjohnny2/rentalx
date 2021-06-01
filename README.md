@@ -28,8 +28,7 @@ O desenvolvimento da aplicação se sustenta com base nos princípios da arquite
 ### Regras de Negócio
 
 - Não deve ser possível cadastrar um carro com uma placa já existente.
-- Não deve ser possível alterar a placa de um carro já cadastrado.
-- Não deve ser possível cadastrar um carro se o usuário não for administrador.
+- Não deve ser possível cadastrar um carro se o usuário não for administrador *.
 - Deve se cadastrar um carro com disponibilidade por padrão.
 
 ## Listagem de Carros
