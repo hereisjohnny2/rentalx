@@ -20,7 +20,7 @@ export class CreateCars1622492137272 implements MigrationInterface {
             type: "varchar",
           },
           {
-            name: "daily_date",
+            name: "daily_rate",
             type: "numeric",
           },
           {
