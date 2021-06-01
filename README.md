@@ -24,7 +24,6 @@ O desenvolvimento da aplicação se sustenta com base nos princípios da arquite
 ### Requisitos Funcionais 
 
 - Deve ser possível cadastrar um novo carro.
-- Deve ser possível listar todas as categorias.
 
 ### Regras de Negócio
 
