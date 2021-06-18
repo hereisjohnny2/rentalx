@@ -27,20 +27,20 @@ class CreateRentalUseCase {
     car_id,
     expected_return_date,
   }: IRequest): Promise<Rental> {
-    const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(
-      car_id
-    );
-
-    if (carUnavailable) {
-      throw new AppError("Car is not available");
-    }
-
     const rentalOpenToUser = await this.rentalsRepository.findOpenRentalByUser(
       user_id
     );
 
     if (rentalOpenToUser) {
       throw new AppError("There is a rental in progress for this user.");
+    }
+
+    const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(
+      car_id
+    );
+
+    if (carUnavailable) {
+      throw new AppError("Car is not available");
     }
 
     const compare = this.dateProvider.compareInHours(

@@ -49,44 +49,78 @@ describe("Create Rental", () => {
   });
 
   it("should not be able to create a new rental if user has already an open rental", async () => {
-    expect(async () => {
-      await createRentalUseCase.execute({
-        user_id: "user_id",
-        car_id: "car_id",
-        expected_return_date: dayAdd24Hours,
-      });
+    const car = await carRespository.create({
+      name: "Car Test",
+      description: "Description Test",
+      brand: "test",
+      daily_rate: 100,
+      fine_amount: 100,
+      licence_plate: "test",
+      category_id: "123456",
+    });
 
-      await createRentalUseCase.execute({
+    await createRentalUseCase.execute({
+      user_id: "user_id",
+      car_id: car.id,
+      expected_return_date: dayAdd24Hours,
+    });
+
+    await expect(
+      createRentalUseCase.execute({
         user_id: "user_id",
-        car_id: "car_id",
+        car_id: car.id,
         expected_return_date: dayAdd24Hours,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(
+      new AppError("There is a rental in progress for this user.")
+    );
   });
 
   it("should not be able to create a new rental if car is already in use", async () => {
-    expect(async () => {
-      await createRentalUseCase.execute({
-        user_id: "user_id",
-        car_id: "test",
-        expected_return_date: dayAdd24Hours,
-      });
+    const car = await carRespository.create({
+      name: "Car Test",
+      description: "Description Test",
+      brand: "test",
+      daily_rate: 100,
+      fine_amount: 100,
+      licence_plate: "test",
+      category_id: "123456",
+    });
 
-      await createRentalUseCase.execute({
+    await createRentalUseCase.execute({
+      user_id: "user_id",
+      car_id: car.id,
+      expected_return_date: dayAdd24Hours,
+    });
+
+    await expect(
+      createRentalUseCase.execute({
         user_id: "user_id2",
-        car_id: "test",
+        car_id: car.id,
         expected_return_date: dayAdd24Hours,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError("Car is not available"));
   });
 
   it("should not be able to create a new rental with expected renturn date lower than 24 hours", async () => {
-    expect(async () => {
-      await createRentalUseCase.execute({
+    const car = await carRespository.create({
+      name: "Car Test",
+      description: "Description Test",
+      brand: "test",
+      daily_rate: 100,
+      fine_amount: 100,
+      licence_plate: "test",
+      category_id: "123456",
+    });
+
+    await expect(
+      createRentalUseCase.execute({
         user_id: "user_id",
-        car_id: "test",
+        car_id: car.id,
         expected_return_date: dayAdd5Hous,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(
+      new AppError("Expeted day should be longer than 24 hours")
+    );
   });
 });
