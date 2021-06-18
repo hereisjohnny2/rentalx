@@ -1,77 +1,153 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "RentalX Documentation",
-        "description": "This an API for car rental services provided by RentalX.",
-        "version": "1.0.0",
-        "contact": {
-            "email": "carvalho.joaomc@gmail.com"
-        }
-    },
-    "paths": {
-        "/categories": {
-            "post": {
-                "tags": ["Category"],
-                "summary": "Create a category",
-                "description": "Creates a new category with a name and description.",
-                "requestBody": {
-                    "content": {
-                        "application-json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "description": {
-                                        "type": "string"
-                                    }
-                                },
-                                "example": {
-                                    "name": "category name sample",
-                                    "description": "category description sample"
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created."
-                    },
-                    "500":{
-                        "description": "Category already exists."
-                    }
-                }
-            },
-            "get": {
-                "tags": ["Category"],
-                "summary": "List all categories.",
-                "description": "List all categories",
-                "responses": {
-                    "200": {
-                        "description": "Success.",
-                        "content": {
-                            "application-json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "name": {
-                                                "type": "string"
-                                            },
-                                            "description": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+  "openapi": "3.0.0",
+  "info": {
+    "title": "RentalX Documentation",
+    "description": "This an API for car rental services provided by RentalX.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "carvalho.joaomc@gmail.com"
     }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/categories": {
+      "post": {
+        "tags": ["Category"],
+        "summary": "Create a category",
+        "description": "Creates a new category with a name and description.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+              "application-json": {
+              "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                "example": {
+                  "name": "category name sample",
+                  "description": "category description sample"
+                } 
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created."
+          },
+          "500":{
+            "description": "Category already exists."
+          }
+        }
+      },
+      "get": {
+        "tags": ["Category"],
+        "summary": "List all categories.",
+        "description": "List all categories",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application-json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Authentication User",
+        "description": "Authenticate a user by its email and password. It should be able to return a to token that would be use in the rest of application.",
+        "requestBody": {
+          "content": {
+            "application-json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully authenticated.",
+            "content": {
+              "application-json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "token": "dadasdadewf4fsf4sdfs65f4",
+                    "user": {
+                      "name": "user name",
+                      "email": "user@mail.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email or password incorrect."
+          }
+        }
+      }
+    }
+  }
 }
