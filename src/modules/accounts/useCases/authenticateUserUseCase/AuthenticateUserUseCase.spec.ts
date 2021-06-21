@@ -1,18 +1,24 @@
 import { AppError } from "../../../../shared/errors/AppError";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { UsersRepositoryInMemory } from "../../respositories/in-memory/UsersRepositoryInMemory";
+import { UsersTokenRepositoryInMemory } from "../../respositories/in-memory/UsersTokenRepositoryInMemory";
+import { IUsersRepository } from "../../respositories/IUsersRepository";
+import { IUsersTokensRepository } from "../../respositories/IUsersTokensRepository";
 import { CreateUserUseCase } from "../createUserUseCase/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 
 let authenticateUserUseCase: AuthenticateUserUseCase;
-let usersRepositoryInMemory: UsersRepositoryInMemory;
+let usersRepositoryInMemory: IUsersRepository;
+let userTokensRepositoryInMemory: IUsersTokensRepository;
 let createUserUseCase: CreateUserUseCase;
 
 describe("Authenticate Use", () => {
   beforeEach(() => {
     usersRepositoryInMemory = new UsersRepositoryInMemory();
+    userTokensRepositoryInMemory = new UsersTokenRepositoryInMemory();
     authenticateUserUseCase = new AuthenticateUserUseCase(
-      usersRepositoryInMemory
+      usersRepositoryInMemory,
+      userTokensRepositoryInMemory
     );
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
   });
