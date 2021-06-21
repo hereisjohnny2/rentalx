@@ -9,6 +9,17 @@ class UsersTokenRepositoryInMemory implements IUsersTokensRepository {
     this.usersTokens = [];
   }
 
+  async findByUserIdAndRefreshToken(
+    user_id: string,
+    token: string
+  ): Promise<UserTokens> {
+    const userToken = this.usersTokens.find(
+      (userToken) =>
+        userToken.user_id === user_id && userToken.refresh_token === token
+    );
+    return userToken;
+  }
+
   async create({
     user_id,
     expires_date,
@@ -25,6 +36,12 @@ class UsersTokenRepositoryInMemory implements IUsersTokensRepository {
     this.usersTokens.push(userTokens);
 
     return userTokens;
+  }
+
+  async deleteById(id: string): Promise<void> {
+    this.usersTokens = this.usersTokens.filter(
+      (userToken) => userToken.id !== id
+    );
   }
 }
 
