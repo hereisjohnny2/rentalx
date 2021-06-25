@@ -1,8 +1,7 @@
 node_modules
 .vscode
 dist
-tmp
-1615818549022-attachment.csv
 .env
-
-new_user_credentials.csv
+coverage
+tmp/*
+!tmp/.gitkeep
