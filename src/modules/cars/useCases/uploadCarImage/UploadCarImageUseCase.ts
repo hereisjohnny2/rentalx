@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { IStorageProvider } from "../../../../shared/container/providers/StorageProvider/IStorageProvider";
 import { AppError } from "../../../../shared/errors/AppError";
 import { ICarsImagesRepository } from "../../repositories/ICarsImagesRepository";
 import { ICarsRepository } from "../../repositories/ICarsRepository";
@@ -15,7 +16,9 @@ class UploadCarImageUseCase {
     @inject("CarsImagesRepository")
     private carsImagesRepository: ICarsImagesRepository,
     @inject("CarsRepository")
-    private carsRepository: ICarsRepository
+    private carsRepository: ICarsRepository,
+    @inject("StorageProvider")
+    private storageProvider: IStorageProvider
   ) {}
 
   async execute({ car_id, images_name }: IRequest): Promise<void> {
@@ -27,6 +30,7 @@ class UploadCarImageUseCase {
 
     images_name.map(async (image_name) => {
       await this.carsImagesRepository.create(car_id, image_name);
+      await this.storageProvider.save(image_name, "cars");
     });
   }
 }
